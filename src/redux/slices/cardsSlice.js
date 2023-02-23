@@ -3,6 +3,7 @@ const fullCardList = [...data,...data].sort(function(){
     return 0.5 - Math.random();
 });
 
+
 const cardsSlice = createSlice({
     name: "cards",
     initialState: {
@@ -16,32 +17,15 @@ const cardsSlice = createSlice({
             state.cardList.map((card,index) => {
                 if(index === action.payload) {
                     state.clickIndex += 1;
-                    if(state.clickIndex == 1) {                       
-                        card.status = true;
-                        state.clicedItem = card;    
-                    }
-                    if(state.clickIndex == 2) {
-                        card.status = true;
-                        if(card.name === state.clicedItem.name) {
-                            // state.clickedCards.push(card);
-                            // state.clickedCards.push(state.clicedItem);
-                            // state.clicedItem = {};
-                            // state.clickIndex = 0
-                        } else {
-                            card.status = false;
-                            state.clicedItem.status == false
-                            // state.clicedItem = {};
-                            // state.clickIndex = 0
-                        }
-                        state.clicedItem = {};
-                        state.clickIndex = 0
-                                              
-                    }                  
-                    
+                    card.status = true;
                 }
             })
-            console.log(fullCardList); 
-            console.log(state.cardList)
+        },
+        correctCard: (state,action) => {
+
+        },
+        wrongCard: (state,action) => {
+
         }
         
     }
@@ -50,3 +34,4 @@ const cardsSlice = createSlice({
 export const { clickCard } = cardsSlice.actions;
 
 export default cardsSlice.reducer;
+
