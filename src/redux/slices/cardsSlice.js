@@ -15,23 +15,38 @@ const cardsSlice = createSlice({
     reducers: {
         clickCard: (state,action) => {
             state.cardList.map((card,index) => {
-                if(index === action.payload) {
-                    state.clickIndex += 1;
+                if(index === action.payload.index) {
                     card.status = true;
+                    state.clickIndex += 1;               
                 }
             })
-        },
-        correctCard: (state,action) => {
 
         },
-        wrongCard: (state,action) => {
-
-        }
+        firstCard: (state,action) => {
+            state.clicedItem = action.payload.card
+        },
+        // wrongCard: (state,action) => {
+        //     state.cardList.map((card,index) => {
+        //         if(index === action.payload.index) {
+        //             state.clickIndex = 0;
+        //             card.status = false;
+        //         }
+        //     })
+        // },
+        // trueCard: (state,action) => {
+        //     state.clicedItem = {}
+        //     state.clickIndex = 0
+        // },
+        // closeToFirtCard : (state,action) => {
+        //     state.clicedItem = action.payload
+        //     state.clicedItem = false
+        //     console.log(action.payload);
+        // }
         
     }
 })
 
-export const { clickCard } = cardsSlice.actions;
+export const { clickCard,firstCard,wrongCard,trueCard,closeToFirtCard } = cardsSlice.actions;
 
 export default cardsSlice.reducer;
 
