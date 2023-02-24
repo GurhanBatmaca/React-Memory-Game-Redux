@@ -1,5 +1,5 @@
 import { useSelector,useDispatch } from "react-redux";
-import { clickCard,firstCard,wrongCard,trueCard,closeToFirtCard } from "../redux/slices/cardsSlice";
+import { firsClick,secondClick,wrongCard } from "../redux/slices/cardsSlice";
 
 export const CardList = () => {
     const cardList = useSelector(state => state.cards.cardList);
@@ -10,10 +10,19 @@ export const CardList = () => {
 
     const sideEffectFunc = ({ index, card }) => {
         if( clickIndex === 0 ) {
-            dispatch(clickCard( index ));
+            dispatch(firsClick( {index,card} ));
             
-        } else if ( clicedItem === 1 ) {
-            dispatch(clickCard( index ));
+        } else if (clickIndex === 1)  {
+            dispatch(secondClick( {index} ));
+            if(clicedItem.name != card.name) {
+
+                setTimeout(() => {
+                    dispatch(wrongCard({card}))
+                    console.log("hata");
+                    console.log(cardList);
+                },1000)
+            }
+  
 
         }
       };

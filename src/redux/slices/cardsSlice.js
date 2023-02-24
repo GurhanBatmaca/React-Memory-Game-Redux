@@ -13,40 +13,35 @@ const cardsSlice = createSlice({
         clickIndex: 0
     },
     reducers: {
-        clickCard: (state,action) => {
+        firsClick: (state,action) => {
             state.cardList.map((card,index) => {
                 if(index === action.payload.index) {
                     card.status = true;
-                    state.clickIndex += 1;               
+                    state.clickIndex += 1;
+                    state.clicedItem = action.payload.card;               
                 }
             })
-
         },
-        firstCard: (state,action) => {
-            state.clicedItem = action.payload.card
-        },
-        // wrongCard: (state,action) => {
-        //     state.cardList.map((card,index) => {
-        //         if(index === action.payload.index) {
-        //             state.clickIndex = 0;
-        //             card.status = false;
-        //         }
-        //     })
-        // },
-        // trueCard: (state,action) => {
-        //     state.clicedItem = {}
-        //     state.clickIndex = 0
-        // },
-        // closeToFirtCard : (state,action) => {
-        //     state.clicedItem = action.payload
-        //     state.clicedItem = false
-        //     console.log(action.payload);
-        // }
-        
+        secondClick: (state,action) => {
+            state.cardList.map((card,index) => {
+                if(index === action.payload.index) {
+                    card.status = true;
+                    state.clickIndex = 0;              
+                }
+            })
+        }, 
+        wrongCard: (state,action) => {
+            state.clicedItem.status = false
+            state.cardList.map((card,index) => {
+                if(card.name === action.payload.name) {
+                    card.status = false;             
+                }
+            })
+        }      
     }
 })
 
-export const { clickCard,firstCard,wrongCard,trueCard,closeToFirtCard } = cardsSlice.actions;
+export const { firsClick,secondClick,wrongCard } = cardsSlice.actions;
 
 export default cardsSlice.reducer;
 
