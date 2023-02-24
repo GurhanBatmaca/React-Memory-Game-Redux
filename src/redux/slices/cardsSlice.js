@@ -9,7 +9,7 @@ const cardsSlice = createSlice({
     initialState: {
         cardList: fullCardList,
         clickedCards : [],
-        clicedItem : {},
+        clicedItem : "",
         clickIndex: 0
     },
     reducers: {
@@ -18,7 +18,7 @@ const cardsSlice = createSlice({
                 if(index === action.payload.index) {
                     card.status = true;
                     state.clickIndex += 1;
-                    state.clicedItem = action.payload.card;               
+                    state.clicedItem = action.payload.name;               
                 }
             })
         },
@@ -31,17 +31,23 @@ const cardsSlice = createSlice({
             })
         }, 
         wrongCard: (state,action) => {
-            state.clicedItem.status = false
             state.cardList.map((card,index) => {
                 if(card.name === action.payload.name) {
-                    card.status = false;             
+                    card.status = false;  
                 }
             })
-        }      
+        },
+        oneWronCard: (state,action) => {
+            state.cardList.map((card,index) => {
+                if(card.name === state.clicedItem) {
+                    card.status = false;
+                }
+            }) 
+        }     
     }
 })
 
-export const { firsClick,secondClick,wrongCard } = cardsSlice.actions;
+export const { firsClick,secondClick,wrongCard,oneWronCard } = cardsSlice.actions;
 
 export default cardsSlice.reducer;
 

@@ -1,29 +1,30 @@
 import { useSelector,useDispatch } from "react-redux";
-import { firsClick,secondClick,wrongCard } from "../redux/slices/cardsSlice";
+import { firsClick,secondClick,wrongCard,oneWronCard } from "../redux/slices/cardsSlice";
 
 export const CardList = () => {
-    const cardList = useSelector(state => state.cards.cardList);
+    let cardList = useSelector(state => state.cards.cardList);
     const clickIndex = useSelector(state => state.cards.clickIndex);
     const clicedItem = useSelector(state => state.cards.clicedItem);
 
     const dispatch = useDispatch();
 
-    const sideEffectFunc = ({ index, card }) => {
+    const sideEffectFunc = ({ index, name }) => {
         if( clickIndex === 0 ) {
-            dispatch(firsClick( {index,card} ));
+            dispatch(firsClick( {index,name} ));
             
         } else if (clickIndex === 1)  {
-            dispatch(secondClick( {index} ));
-            if(clicedItem.name != card.name) {
-
+            if(clicedItem !== name) {
+                dispatch(secondClick( {index} ));
                 setTimeout(() => {
-                    dispatch(wrongCard({card}))
-                    console.log("hata");
-                    console.log(cardList);
+                    dispatch(oneWronCard())
                 },1000)
+                setTimeout(() => {
+                    dispatch(secondClick( {index} ));
+                    dispatch(wrongCard({name}))
+                },1000)
+            } else if (clicedItem === name) {
+                dispatch(secondClick( {index} ));
             }
-  
-
         }
       };
 
@@ -31,7 +32,7 @@ export const CardList = () => {
     <div className='p-5 row card-list'>
         {
             cardList.map((card,index) => (
-                <div onClick={() => {sideEffectFunc( { index,card } )}} key={index} className="col-sm-2 col-6">
+                <div onClick={() => {sideEffectFunc( { index, name: card.name } )}} key={index} className="col-sm-2 col-6">
                     <div className="p-2 card-top">
                         <div className={ (card.status ? "card-wall" : "card-head") +" "}>
                             <img src={card.img} alt={card.name}/>
