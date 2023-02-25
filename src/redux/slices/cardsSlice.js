@@ -3,14 +3,14 @@ const fullCardList = [...data,...data].sort(function(){
     return 0.5 - Math.random();
 });
 
-
 const cardsSlice = createSlice({
     name: "cards",
     initialState: {
         cardList: fullCardList,
-        clickedCards : [],
+        score : 0,
         clicedItem : "",
-        clickIndex: 0
+        clickIndex: 0,
+        clickedCards: []
     },
     reducers: {
         firsClick: (state,action) => {
@@ -18,7 +18,7 @@ const cardsSlice = createSlice({
                 if(index === action.payload.index) {
                     card.status = true;
                     state.clickIndex += 1;
-                    state.clicedItem = action.payload.name;               
+                    state.clicedItem = action.payload.name;     
                 }
             })
         },
@@ -26,14 +26,16 @@ const cardsSlice = createSlice({
             state.cardList.map((card,index) => {
                 if(index === action.payload.index) {
                     card.status = true;
-                    state.clickIndex = 0;              
+                    state.clickIndex = 0;             
                 }
             })
         }, 
         wrongCard: (state,action) => {
+            state.score -= 10 
             state.cardList.map((card,index) => {
                 if(card.name === action.payload.name) {
-                    card.status = false;  
+                    card.status = false; 
+                   
                 }
             })
         },
@@ -43,11 +45,24 @@ const cardsSlice = createSlice({
                     card.status = false;
                 }
             }) 
-        }     
+        },
+        resetList: (state,action) => {
+            state.cardList = [...data,...data].sort(function(){
+                return 0.5 - Math.random();
+            });
+            state.score = 0;
+            state.clicedItem = "";
+            state.clickIndex = 0;
+            state.clickedCards = [];
+        },
+        addScore: (state,action) => {
+            state.score += 50
+            state.clickedCards.push(state.clicedItem)
+        }
     }
 })
 
-export const { firsClick,secondClick,wrongCard,oneWronCard } = cardsSlice.actions;
+export const { firsClick,secondClick,wrongCard,oneWronCard,trueGuess,resetList,addScore } = cardsSlice.actions;
 
 export default cardsSlice.reducer;
 
