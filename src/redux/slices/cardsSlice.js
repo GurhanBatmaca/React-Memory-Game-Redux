@@ -1,7 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";import { data } from "../../data/data";
+import { fetchList } from "../../service/service";
 const fullCardList = [...data,...data].sort(function(){
     return 0.5 - Math.random();
 });
+
+
 
 const cardsSlice = createSlice({
     name: "cards",
@@ -59,6 +62,18 @@ const cardsSlice = createSlice({
             state.score += 50
             state.clickedCards.push(state.clicedItem)
         }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(fetchList.pending , (state, action) => {
+            console.log("loading");
+        })
+        builder.addCase(fetchList.fulfilled , (state, action) => {
+            console.log(action.payload);
+        })
+        builder.addCase(fetchList.rejected , (state, action) => {
+            console.log(action.payload);
+            console.log("hata");
+        })
     }
 })
 

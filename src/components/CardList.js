@@ -1,14 +1,23 @@
 import { useSelector,useDispatch } from "react-redux";
+import { useEffect } from "react";
 import { firsClick,secondClick,wrongCard,oneWronCard,resetList,addScore } from "../redux/slices/cardsSlice";
+import { fetchList } from "../service/service";
 
 export const CardList = () => {
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(fetchList())
+    },[])
+
     const cardList = useSelector(state => state.cards.cardList);
     const clickIndex = useSelector(state => state.cards.clickIndex);
     const clicedItem = useSelector(state => state.cards.clicedItem);
     const score = useSelector(state => state.cards.score);
     const clickedCards = useSelector(state => state.cards.clickedCards);
 
-    const dispatch = useDispatch();
+    
 
     const sideEffectFunc = ({ index, name }) => {
         if( clickIndex === 0 ) {
