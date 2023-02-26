@@ -19,16 +19,16 @@ const cardsSlice = createSlice({
         firsClick: (state,action) => {
             state.cardList.map((card,index) => {
                 if(index === action.payload.index) {
-                    card.status = true;
+                    card.adult = true;
                     state.clickIndex += 1;
-                    state.clicedItem = action.payload.name;     
+                    state.clicedItem = action.payload.id;     
                 }
             })
         },
         secondClick: (state,action) => {
             state.cardList.map((card,index) => {
                 if(index === action.payload.index) {
-                    card.status = true;
+                    card.adult = true;
                     state.clickIndex = 0;             
                 }
             })
@@ -36,31 +36,34 @@ const cardsSlice = createSlice({
         wrongCard: (state,action) => {
             state.score -= 10 
             state.cardList.map((card,index) => {
-                if(card.name === action.payload.name) {
-                    card.status = false; 
+                if(card.id === action.payload.id) {
+                    card.adult = false; 
                    
                 }
             })
         },
         oneWronCard: (state,action) => {
             state.cardList.map((card,index) => {
-                if(card.name === state.clicedItem) {
-                    card.status = false;
+                if(card.id === state.clicedItem) {
+                    card.adult = false;
                 }
             }) 
         },
         resetList: (state,action) => {
-            state.cardList = [...data,...data].sort(function(){
+            state.cardList = [...state.cardList ].sort(function() {
                 return 0.5 - Math.random();
-            });
+            })
+            state.cardList.map((card) => {
+                card.adult = false;
+            })
             state.score = 0;
             state.clicedItem = "";
             state.clickIndex = 0;
             state.clickedCards = [];
         },
         addScore: (state,action) => {
-            state.score += 50
-            state.clickedCards.push(state.clicedItem)
+            state.score += 50;
+            state.clickedCards.push(state.clicedItem);
         }
     },
     extraReducers: (builder) => {
@@ -68,11 +71,13 @@ const cardsSlice = createSlice({
             console.log("loading");
         })
         builder.addCase(fetchList.fulfilled , (state, action) => {
-            console.log(action.payload);
+            state.cardList = [...action.payload,...action.payload].sort(function(){
+                return 0.5 - Math.random();
+            });
         })
         builder.addCase(fetchList.rejected , (state, action) => {
             console.log(action.payload);
-            console.log("hata");
+            console.log("error");
         })
     }
 })
