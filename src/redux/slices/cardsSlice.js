@@ -1,15 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";import { data } from "../../data/data";
+import { createSlice } from "@reduxjs/toolkit"
 import { fetchList } from "../../service/service";
-const fullCardList = [...data,...data].sort(function(){
-    return 0.5 - Math.random();
-});
-
-
 
 const cardsSlice = createSlice({
     name: "cards",
     initialState: {
-        cardList: fullCardList,
+        cardList: [],
         score : 0,
         clicedItem : "",
         clickIndex: 0,
@@ -49,7 +44,7 @@ const cardsSlice = createSlice({
                 }
             }) 
         },
-        resetList: (state,action) => {
+        resetList: (state) => {
             state.cardList = [...state.cardList ].sort(function() {
                 return 0.5 - Math.random();
             })
@@ -61,7 +56,7 @@ const cardsSlice = createSlice({
             state.clickIndex = 0;
             state.clickedCards = [];
         },
-        addScore: (state,action) => {
+        addScore: (state) => {
             state.score += 50;
             state.clickedCards.push(state.clicedItem);
         }

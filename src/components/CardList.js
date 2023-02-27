@@ -18,7 +18,7 @@ export const CardList = () => {
     const clickedCards = useSelector(state => state.cards.clickedCards);  
     let remainingCards = (cardList.length /2) - clickedCards.length
 
-    const sideEffectFunc = ({ index, id }) => {
+    const sideEffectFunc = ( {index, id} ) => {
         if( clickIndex === 0 ) {
             dispatch(firsClick( {index,id} ));
             console.log(cardList);                      
@@ -27,11 +27,11 @@ export const CardList = () => {
                 dispatch(secondClick( {index} ));
                 setTimeout(() => {
                     dispatch(oneWronCard());
-                },1000)
+                },1500)
                 setTimeout(() => {
                     dispatch(secondClick( {index} ));
-                    dispatch(wrongCard({id}));
-                },1000)
+                    dispatch(wrongCard( {id}));
+                },1500)
             } else if (clicedItem === id) {
                 dispatch(secondClick( {index} ));
                 dispatch(addScore());
@@ -40,8 +40,8 @@ export const CardList = () => {
       };
 
   return (
-    <div className='p-5 '>
-        <div className="p-4 text-center">
+    <div className='container'>
+        <div className="text-center info-box mb-3 p-4">
             <div >
                 <h3>Score: {score}</h3>
                 <h5>Remaining cards: {remainingCards}</h5>
@@ -58,17 +58,18 @@ export const CardList = () => {
             </button>
 
         </div>
-        <div className="row card-list">
+        <div className="row card-list ">
         {
             cardList.map((card,index) => (
-                <div onClick={() => {sideEffectFunc( { index, id: card.id } )}} key={index} className="col-sm-2 col-6">
-                    <div className="p-2 card-top">
+                <div onClick={() => {sideEffectFunc( { index, id: card.id } )}} key={index} className="col-6 col-sm-3 col-lg-2 pt-1">
+                    <div className="card-top">
                         <div className={ (card.adult ? "card-wall" : "card-head") +" "}>
                             <img src={`https://image.tmdb.org/t/p/w780/${card.backdrop_path}`} alt={card.original_title}/>
                             <h5>{card.original_title}</h5>
                         </div>
                         <div className={ (card.adult ? "card-head" : "card-wall") + " "}>
-                            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/25.svg" alt="pokemon"/>
+                        <i class="fa-solid fa-video"></i>
+                            <img src="https://pyxis.nymag.com/v1/imgs/978/4d0/4b4779e1dcb86984abe55c08366f9babe7-13-empty-theater.rsquare.w700.jpg" alt="pokemon"/>
                         </div>
                     </div>
                 </div>

@@ -1,14 +1,10 @@
-// import { useDispatch, useSelector } from "react-redux";
 import './App.css';
 import { CardList } from "./components/CardList";
 
-
 function App() {
 
-  // const cards = useSelector(state => state.cards.cardList)
-
   return (
-    <div className="App">
+    <div className="App p-sm-5 pt-3 ">
       <CardList />
     </div>
   );
