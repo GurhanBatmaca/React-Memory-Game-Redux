@@ -28,16 +28,15 @@ const cardsSlice = createSlice({
                 }
             })
         }, 
-        wrongCard: (state,action) => {
+        secondWrongCard: (state,action) => {
             state.score -= 10 
             state.cardList.map((card,index) => {
                 if(card.id === action.payload.id) {
-                    card.adult = false; 
-                   
+                    card.adult = false;                   
                 }
             })
         },
-        oneWronCard: (state,action) => {
+        firstWrongCard: (state,action) => {
             state.cardList.map((card,index) => {
                 if(card.id === state.clicedItem) {
                     card.adult = false;
@@ -71,13 +70,13 @@ const cardsSlice = createSlice({
             });
         })
         builder.addCase(fetchList.rejected , (state, action) => {
-            console.log(action.payload);
             console.log("error");
+            console.log(action.payload);
         })
     }
 })
 
-export const { firsClick,secondClick,wrongCard,oneWronCard,trueGuess,resetList,addScore } = cardsSlice.actions;
+export const { firsClick,secondClick,secondWrongCard,firstWrongCard,resetList,addScore } = cardsSlice.actions;
 
 export default cardsSlice.reducer;
 
